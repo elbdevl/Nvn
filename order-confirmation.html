@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الطلب - تازارين</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        /* أنماط خاصة بصفحة التأكيد */
+        .confirmation-header {
+            text-align: center;
+            padding: 3rem 0;
+            background: #F8F9FA;
+        }
+
+            font-size: 4rem;
+            color: #28A745;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease;
+        }
+
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .order-items-list {
+            margin: 1rem 0;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .continue-shopping {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px);}
+            60% {transform: translateY(-15px);}
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <header class="nav-bar">
+        <!-- نفس شريط التنقل من الصفحات الأخرى -->
+    </header>
+
+    <!-- محتوى التأكيد -->
+    <main class="main-content">
+        <section class="confirmation-header">
+            <div class="container">
+                <i class="fas fa-check-circle confirmation-icon"></i>
+                <h1>شكراً لطلبك!</h1>
+                <p>تم استلام طلبك بنجاح وسيتم تجهيزه للشحن خلال 24 ساعة</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="order-details">
+                <!-- معلومات الطلب -->
+                <div class="order-card">
+                    <h2>معلومات الطلب</h2>
+                    <ul class="order-info">
+                        <li><strong>رقم الطلب:</strong> #12345</li>
+                        <li><strong>تاريخ الطلب:</strong> 2023-10-20</li>
+                        <li><strong>طريقة الدفع:</strong> Visa **** 1234</li>
+                        <li><strong>حالة الطلب:</strong> قيد التجهيز</li>
+                    </ul>
+                </div>
+
+                <!-- تفاصيل الشحن -->
+                <div class="order-card">
+                    <h2>عنوان الشحن</h2>
+                    <address>
+                        محمد أحمد<br>
+                        الرياض، حي المروج<br>
+                        شارع الملك فهد، مبنى 123<br>
+                        0551234567
+                    </address>
+                </div>
+            </div>
+
+            <!-- تفاصيل المنتجات -->
+            <div class="order-card">
+                <h2>المنتجات المطلوبة</h2>
+                <div class="order-items-list" id="orderItems">
+                    <!-- سيتم تعبئتها بالمنتجات -->
+                </div>
+                <div class="order-total">
+                    <div class="total-row">
+                        <span>المجموع النهائي:</span>
+                        <span class="price">3,997 ر.س</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- متابعة التسوق -->
+            <div class="continue-shopping">
+                <a href="products.html" class="cta-button" style="background: orangered; padding: 10px; border-radius: 3px; text-decoration: none; color: black; font-weight: bold ">
+                    <i class="fas fa-arrow-left"></i> العودة إلى المتجر
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- تذييل الصفحة -->
+    <footer class="site-footer">
+        <!-- نفس الفوتر من الصفحات الأخرى -->
+    </footer>
+
+    <script>
+        // عرض المنتجات من localStorage
+        function displayOrderItems() {
+            const orderItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const container = document.getElementById('orderItems');
+            let total = 0;
+
+            container.innerHTML = orderItems.map(item => {
+                total += item.price * item.quantity;
+                return `
+                    <div class="order-item">
+                        <img src="${item.image}" 
+                             alt="${item.name}" 
+                             class="item-image">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>الكمية: ${item.quantity}</p>
+                            <p>${(item.price * item.quantity).toLocaleString()} ر.س</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelector('.order-total .price').textContent = 
+                total.toLocaleString() + ' ر.س';
+        }
+
+        // مسح السلة بعد التأكيد
+        function clearCart() {
+            localStorage.removeItem('cart');
+            document.querySelector('.cart-counter').textContent = '0';
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            displayOrderItems();
+            clearCart();
+        });
+    </script>
+</body>
+</html>

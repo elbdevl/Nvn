@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - سلة التسوق</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px 5px;
+            width: 100%;
+            justify-items: center;
+        }
+
+        /* تنسيق الهيدر المعدل */
+        .header-top {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+
+        /* تحسينات القائمة الجانبية */
+        .menu-toggle {
+            display: none;
+            background: #3BE5DB;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: #000;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #EBEBEB;
+            box-shadow: -2px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            z-index: 999;
+            padding-top: 60px;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links a:hover {
+            background: #f5f5f5;
+        }
+
+        /* تنسيقات الشاشات الكبيرة */
+        .desktop-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .desktop-nav a {
+            color: #38E0D8;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #eee ;
+            background: #1C1C1C;
+            transition: 0.3s;
+        }
+
+        .desktop-nav a:hover {
+            background: #3BE5DB;
+            color: #1a1a1a;
+        }
+
+        /* تنسيق قائمة الجوال */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #21C4E6;
+            font-size: 2rem;
+            padding: 2px 20px;
+            border-radius: 50px;
+            border: 2px solid #eee ;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            justify-items: center;
+            border-radius: 0 0 0 50px;
+            height: 80%;
+            background: #eee;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+            padding-top: 60px;
+            padding-inline: 20px;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #2FF6D4;
+            background: #333;
+            text-decoration: none;
+            padding: 20px;
+            padding-inline: 60px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #f5f5f5;
+        }
+
+        /* استعلامات الوسائط */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .sidebar {
+                display: none !important;
+            }
+        }
+
+        /* تنسيقات سلة التسوق */
+        .cart-section {
+            width: 98%;
+            margin: 40px auto;
+            padding: 10px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            border-bottom: 2px solid #3BE5DB;
+            padding-bottom: 15px;
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            width: 98%;
+            align-items: center;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 260px;
+            margin-left: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            color: #3BE5DB;
+            font-weight: bold;
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: #3BE5DB;
+            color: white;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 35px;
+            text-align: center;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 150px;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            transform: scale(1.1);
+        }
+
+        .item-total {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .cart-summary {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .summary-details {
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .summary-row.total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-bottom: none;
+            color: #333;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .checkout-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .continue-shopping, .cta-button {
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .continue-shopping {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .continue-shopping:hover {
+            background: #e0e0e0;
+        }
+
+        .cta-button {
+            background: #3BE5DB;
+            color: #1a1a1a;
+            border: none;
+        }
+
+        .cta-button:hover {
+            background: #2ac9c0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 229, 219, 0.3);
+        }
+
+        .empty-cart-message {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-size: 1.2rem;
+        }
+
+        .empty-cart-message i {
+            font-size: 3rem;
+            color: #3BE5DB;
+            margin-bottom: 20px;
+        }
+
+        /* التجاوب */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px;
+            }
+            
+            .item-image {
+                margin-left: 0;
+                margin-bottom: 15px;
+            }
+            
+            .item-actions {
+                align-items: flex-start;
+                margin-top: 15px;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .checkout-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .continue-shopping, .cta-button {
+                justify-content: center;
+            }
+        }
+
+        footer {
+            display: flex;
+            background-color: #3CDDD3;
+            color: white;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            width: 100%;
+            position: relative;
+            padding: 10px;
+            height: auto;
+            bottom: 0;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .footer-section {
+            position: relative;
+            width: 80%;
+            padding: 10px;
+            justify-items: right;
+            justify-content: space-between;
+        }
+        
+        .footer-section h4 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section a {
+            color: #FFFFFF;
+            text-decoration: none;
+            display: flex;
+            margin: 10px 0;
+            align-items: center;
+            transition: color 0.3s ease;
+            gap: 10px;
+        }
+
+        .footer-section a:hover {
+            color: #1a1a1a;
+        }
+
+        .footer-section p {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            position: relative;
+            margin-top: -20px;
+            border-top: 0.6px solid black;
+            bottom: 0;
+            font-size: 0.9rem;
+            color: darkslategray;
+        }
+    </style>
+</head> 
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <h2>TAZARINE</h2>
+                <span class="logo-subtitle">HOME&DECO</span>
+            </div>
+            
+            <!-- قائمة سطح المكتب -->
+            <nav class="desktop-nav">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+            <!-- زر القائمة الجانبية -->
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- القائمة الجانبية -->
+        <div class="sidebar">
+            <button class="close-btn">&times;</button>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+                <a href="products.html"><i class="fas fa-box-open"></i> المنتجات</a>
+                <a href="cart.html"><i class="fas fa-shopping-cart"></i> السلة</a>
+                <a href="contact.html"><i class="fas fa-phone-alt"></i> اتصل بنا</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="cart-section">
+        <div class="container">
+            <h2 class="section-title">سلة التسوق <i class="fas fa-shopping-cart"></i></h2>
+            
+            <div class="cart-items" id="cartItemsContainer">
+                <!-- سيتم تعبئتها ديناميكيًا -->
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span>المجموع الجزئي:</span>
+                        <span class="subtotal" id="subtotal">0.00 درهم</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>رسوم الشحن:</span>
+                        <span class="shipping" id="shipping">50.00 درهم</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>المجموع الكلي:</span>
+                        <span class="grand-total" id="grandTotal">0.00 درهم</span>
+                    </div>
+                </div>
+                <div class="checkout-actions">
+                    <a href="products.html" class="continue-shopping">
+                        <i class="fas fa-arrow-right"></i> متابعة التسوق
+                    </a>
+                    <a href="checkout.html" class="cta-button">
+                        <i class="fas fa-credit-card"></i> إتمام الشراء
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer>
+  <div class="footer-section">
+    <h4>روابط سريعة</h4>
+    <a href="about.html">عن المتجر</a>
+    <a href="return-policy.html">سياسة الإرجاع</a>
+  </div>
+  <div class="footer-section">
+    <h4>اتصل بنا</h4>
+    <p><i class="fas fa-phone"></i> 0700720490</p>
+    <p><i class="fas fa-envelope"></i>tazarinedeco@gmail.com</p>
+  </div>
+</footer>
+    <div class="footer-bottom">
+     <p>tazarine home&deco 2025 - All rights reserved © </p>
+ </div>
+    <script>
+        // بيانات المنتجات (ستأتي عادةً من ملف pp.js)
+        const products = [
+            {
+                id: 1,
+                name: "كنبة فاخرة",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&h=300"
+            },
+            {
+                id: 2,
+                name: "طاولة طعام",
+                price: 899,
+                image: "https://images.unsplash.com/photo-1533090368676-1fd25485db88?auto=format&fit=crop&w=400&h=300"
+            },
+            {
+                id: 3,
+                name: "كرسي مكتب",
+                price: 499,
+                image: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=400&h=300"
+            },
+            {
+                id: 4,
+                name: "خزانة كتب",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=400&h=300"
+            }
+        ];
+
+        // محاكاة سلة التسوق
+        let cart = [
+            { id: 1, quantity: 1 },
+            { id: 3, quantity: 2 },
+            { id: 4, quantity: 1 }
+        ];
+
+        // دالة للحصول على تفاصيل المنتج
+        function getProductById(id) {
+            return products.find(product => product.id === id);
+        }
+
+        // دالة لتحديث سلة التسوق
+        function updateCart() {
+            const cartContainer = document.getElementById('cartItemsContainer');
+            let subtotal = 0;
+            
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="empty-cart-message">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>سلة التسوق فارغة</p>
+                        <p>ابدأ التسوق الآن!</p>
+                    </div>
+                `;
+                document.getElementById('subtotal').textContent = '0.00 درهم';
+                document.getElementById('grandTotal').textContent = '0.00 درهم';
+                return;
+            }
+            
+            cartContainer.innerHTML = '';
+            
+            cart.forEach(item => {
+                const product = getProductById(item.id);
+                if (!product) return;
+                
+                const itemTotal = product.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">${product.name}</h3>
+                        <p class="item-price">${product.price.toLocaleString()} درهم</p>
+                        <div class="quantity-control">
+                            <button class="quantity-btn minus" onclick="updateQuantity(${product.id}, -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" 
+                                onchange="updateQuantity(${product.id}, 0, this.value)">
+                            <button class="quantity-btn plus" onclick="updateQuantity(${product.id}, 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="remove-item" onclick="removeFromCart(${product.id})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <p class="item-total">${itemTotal.toLocaleString()} درهم</p>
+                    </div>
+                `;
+                cartContainer.appendChild(cartItemElement);
+            });
+            
+            const shipping = 50;
+            const grandTotal = subtotal + shipping;
+            
+            document.getElementById('subtotal').textContent = subtotal.toLocaleString() + ' درهم';
+            document.getElementById('grandTotal').textContent = grandTotal.toLocaleString() + ' درهم';
+        }
+
+        // دالة لتحديث الكمية
+        function updateQuantity(productId, change, newValue = null) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex !== -1) {
+                if (newValue !== null) {
+                    cart[itemIndex].quantity = parseInt(newValue) || 1;
+                } else {
+                    cart[itemIndex].quantity += change;
+                    
+                    if (cart[itemIndex].quantity < 1) {
+                        cart[itemIndex].quantity = 1;
+                    }
+                }
+                
+                updateCart();
+            }
+        }
+
+        // دالة لإزالة منتج من السلة
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // التحكم في القائمة الجانبية
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const closeBtn = document.querySelector('.close-btn');
+        
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+        
+        // إغلاق القائمة عند النقر خارجها
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !e.target.closest('.menu-toggle')) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        // إغلاق القائمة عند تغيير حجم الشاشة
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', updateCart);
+    </script>
+</body>
+</html>

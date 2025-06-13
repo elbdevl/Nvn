@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - أثاث وديكور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* جعل المحتوى يتمدد لدفع الفوتر إلى الأسفل */
+  .main-content {
+    flex: initial; /* إلغاء الخاصية السابقة */
+    padding: 20px;
+  }
+
+        /* الهيدر الرئيسي */
+        header {
+            background: #f5f5f5;
+            position: relative;
+            border-radius: 0 0  50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: visible; /* للسماح بعرض المحتوى الكامل */
+        }
+          @media (min-width: 768px) {
+  header {
+    border-radius: 0 0  20%;
+  }
+}
+        .header-top {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 0.3rem;
+        }
+
+        .rent {
+            background: #3BE5DB;
+            color: black;
+            padding: 30px 25px;
+            border-radius: 25px;
+            font-weight: 900;
+            transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .rent:hover {
+            transform: scale(1.05);
+        }
+
+        /* ستايل السلايدر */
+        .swiper {
+            width: 100%;
+            height: 70vh;
+            min-height: 400px;
+            max-height: 80px;
+            border-radius: 0 0 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .caption {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            bottom: 15%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+
+        /* تنسيق النقاط */
+        .swiper-pagination-bullet {
+            background: #fff !important;
+            opacity: 0.6 !important;
+            width: 12px !important;
+            height: 12px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1 !important;
+            background: #4CAF50 !important;
+            transform: scale(1.2);
+        }
+
+        /* استجابة للهاتف */
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 0.8rem 1rem;
+            }
+            
+            .logo h2 {
+                font-size: 1.3rem;
+            }
+            
+            .rent {
+                padding: 6px 18px;
+                font-size: 0.9rem;
+            }
+            
+            .swiper {
+                height: 50vh;
+                min-height: 300px;
+            }
+            
+            .caption {
+                font-size: 0.9rem;
+                padding: 8px 20px;
+                bottom: 50%;
+            }
+            
+            .lang-switch {
+                display: none;
+            }
+        }
+
+        /* الفوتر */
+       footer {
+    display: flex;
+    background-color: #3CDDD3;
+    color: white;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 4px 15px 4px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 100%;
+    margin-top: auto;
+  }
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  height: auto;
+  bottom: 0;
+  border-radius: 10px 10px 0 0;
+}
+  .footer-section {
+    position: relative;
+    width: 80%;
+    padding: 10px;
+    justify-items: right;
+    justify-content: space-between;
+  }
+.footer-section h4 {
+  color: #2A2A2A;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.footer-section a {
+  color: #FFFFFF;
+  text-decoration: none;
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  transition: color 0.3s ease;
+  gap: 10px;
+}
+
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+.footer-section p {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 768px) {
+  nav {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+   .categories-section {
+        padding: 50px 20px;
+        background: #F8F9FA;
+        text-align: center;
+        border-radius: 20px;
+        margin-top: 2rem;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        color: #333;
+        margin-bottom: 40px;
+        font-size: 2rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .category-item {
+        text-decoration: none;
+        color: #333;
+        transition: transform 0.3s ease;
+    }
+
+    .category-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .category-icon {
+        background: #fff;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .category-icon i {
+        font-size: 2rem;
+        color: #3BE5DB;
+    }
+
+    .category-item:hover .category-icon {
+        background: #3BE5DB;
+    }
+
+    .category-item:hover .category-icon i {
+        color: #fff;
+    }
+
+    .category-item span {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .categories-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .category-icon {
+            width: 70px;
+            height: 70px;
+        }
+        
+        .category-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .categories-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+  
+   /* قسم الميزات */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 80px 5%;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.feature-card i {
+  font-size: 2.5rem;
+  color: #48E9E4;
+  margin-bottom: 20px;
+}
+
+     
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <h2>TAZARINE</h2>
+                <span class="logo-subtitle">HOME&DECO</span>
+            </div>
+            <nav>
+                <button class="rent">تصفح المنتجات</button>
+            </nav>
+        </div>
+
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide">
+                    <img src="images/1.jpg" alt="أثاث مودرن">
+                    <div class="caption">🏡 ديكورات فريدة!</div>
+                </div>
+                <div class="swiper-slide slide">
+                    <img src="images/2.jpg" alt="أثاث كلاسيكي">
+                    <div class="caption">✨ تصميمات أنيقة!</div>
+                </div>
+                <div class="swiper-slide slide">
+                    <img src="images/3.jpg" alt="ديكورات مكتبية">
+                    <div class="caption">💡 حلول مبتكرة!</div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+<div class="main-content">
+    <section class="categories-section">
+        <h2 class="section-title">اكتشف فئاتنا</h2>
+        <div class="categories-grid">
+            <a href="office.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <span>المكاتب</span>
+            </a>
+            
+            <a href="living-room.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-couch"></i>
+                </div>
+                <span>الصالونات</span>
+            </a>
+
+            <a href="bedroom.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <span>غرف النوم</span>
+            </a>
+
+            <a href="kitchen.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <span>المطابخ</span>
+            </a>
+
+            <a href="lighting.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <span>الإضاءة</span>
+            </a>
+
+            <a href="decor.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-paint-roller"></i>
+                </div>
+                <span>الديكور</span>
+            </a>
+
+            <a href="outdoor.html" class="category-item">
+                <div class="category-icon">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <span>الخارجية</span>
+            </a>
+        </div>
+    </section>
+</div>
+<section class="features">
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>شحن سريع</h3>
+            <p>توصيل خلال 24~72 ساعة</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>ضمان 3 سنوات</h3>
+            <p>ضمان شامل على جميع المنتجات</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-credit-card"></i>
+            <h3>دفع آمن</h3>
+            <p>أنظمة دفع إلكتروني محمية</p>
+        </div>
+    </section>
+
+    <footer>
+  <div class="footer-section">
+    <h4>روابط سريعة</h4>
+    <a href="about.html">عن المتجر</a>
+    <a href="return-policy.html">سياسة الإرجاع</a>
+  </div>
+  <div class="footer-section">
+    <h4>اتصل بنا</h4>
+    <p><i class="fas fa-phone"></i> 0700720490</p>
+    <p><i class="fas fa-envelope"></i>tazarinedeco@gmail.com</p>
+  </div>
+</footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+                dynamicBullets: true,
+            },
+            coverflowEffect: {
+                rotate: 5,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+            },
+            breakpoints: {
+                640: {
+                    coverflowEffect: {
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 50,
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

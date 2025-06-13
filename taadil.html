@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - أثاث مكتبي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* صفحة المنتجات الرئيسية */
+        .products-page {
+            display: block;
+        }
+
+        .office-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .office-header h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: 3px solid #f0f0f0;
+            border-radius: 15px 15px 0 0;
+            padding: 5px;
+            background: white;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #3BE5DB;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .product-actions {
+            margin-top: 15px;
+        }
+
+        .add-to-cart {
+            background: #3BE5DB;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        /* صفحة تفاصيل المنتج */
+        .product-detail-page {
+            display: none;
+        }
+
+        .back-button {
+            background: #3BE5DB;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .product-gallery {
+            position: relative;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border: 3px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 5px;
+            background: white;
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .thumbnail.active {
+            border-color: #3BE5DB;
+        }
+
+        .product-specs {
+            margin-top: 20px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: #f8f9fa;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .related-products {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .related-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* التجاوب */
+        @media (max-width: 768px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-image {
+                height: 300px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-image {
+                height: 250px;
+            }
+
+            .product-image {
+                height: 180px;
+            }
+
+            .thumbnails-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <!-- صفحة المنتجات -->
+        <div class="products-page">
+            <div class="office-header">
+                <h1>الأثاث المكتبي الاحترافي</h1>
+                <p>اكتشف مجموعتنا المميزة من حلول العمل الفعالة</p>
+            </div>
+            
+            <div class="products-grid" id="productsContainer"></div>
+        </div>
+
+        <!-- صفحة التفاصيل -->
+        <div class="product-detail-page" id="productDetailPage">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+                العودة
+            </button>
+            
+            <div class="detail-grid" id="productDetailContent"></div>
+        </div>
+    </div>
+ <script src="./js/pp.js"></script>
+</body>
+</html>

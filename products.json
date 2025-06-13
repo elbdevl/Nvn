@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "كرسي مريح",
+      "price": 150.99,
+      "image": "images/2.jpg"
+    },
+    {
+      "id": 2,
+      "name": "مكتب خشبي",
+      "price": 299.50,
+      "image": ".images/1.jpg"
+    },
+    {
+      "id": 3,
+      "name": "خزانة ملفات",
+      "price": 199.00,
+      "image": "cabinet.jpg"
+    }
+  ]
+}
